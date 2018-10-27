@@ -1,0 +1,46 @@
+version: '3.1'
+
+services:
+  https-portal:
+    image: steveltn/https-portal:1
+    container_name: redmine-https
+    ports:
+      - '443:443'
+    links:
+      - main-tool
+    restart: always
+    environment:
+      STAGE: local
+      DOMAINS: 'test.com -> http://＜DockerホストのIPアドレス＞:8030'
+
+  main-tool:
+    image: redmine
+    container_name: redmine-main-tool
+    restart: always
+    ports:
+      - 8030:3000
+    environment:
+      REDMINE_DB_MYSQL: main-dbms
+      REDMINE_DB_DATABASE: main-db
+      REDMINE_DB_USERNAME: main-db-user
+      REDMINE_DB_PASSWORD: main-db-password
+      REDMINE_DB_ENCODING: utf8mb4
+      TZ: Asia/Tokyo
+    volumes:
+      - /home/vagrant/data/redmine/main-tool/files:/usr/src/redmine/files
+      - /home/vagrant/data/redmine/main-tool/log:/usr/src/redmine/log
+      - /home/vagrant/data/redmine/main-tool/plugins:/usr/src/redmine/plugins
+      - /home/vagrant/data/redmine/main-tool/public/themes:/usr/src/redmine/public/themes
+
+  main-dbms:
+    image: mariadb
+    container_name: redmine-main-dbms
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
+    volumes:
+      - /home/vagrant/data/redmine/main-dbms:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: main-db
+      MYSQL_USER: main-db-user
+      MYSQL_PASSWORD: main-db-password
+      MYSQL_ROOT_PASSWORD: password
+      TZ: Asia/Tokyo
