@@ -44,8 +44,8 @@ $ sudo docker-compose -f redmine.yml restart main-tool
 ```
 
 ### Redmineアクセス
-今回はブラウザから`https://test.com`にアクセスする。  
-test.comのドメインを取得していないため、作業マシンのhostsファイルで名前解決が必要。  
+今回はブラウザから`https://cmpk.test.redmine.com`にアクセスする。  
+cmpk.test.redmine.comのドメインを取得していないため、作業マシンのhostsファイルで名前解決が必要。  
 
 ## 気づいたこと
 ### YAMLファイルのRedmine本体側に`restart: always`が必要
