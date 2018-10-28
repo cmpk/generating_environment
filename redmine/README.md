@@ -8,16 +8,13 @@
 - ファイルの基本的な書き方
   - [Redmine を Docker 公式イメージで運用する](https://qiita.com/bezeklik/items/b5c39136a8db23e2e81c)
   - [Redmine](https://hub.docker.com/_/redmine/)
-  - [DB](https://hub.docker.com/_/mariadb/)
+  - [mariadb](https://hub.docker.com/_/mariadb/)
 - redmine.yml の主な特徴
   - データ格納領域はホストにマウント
   - 日本で日本語で使用されると想定：[dockerでRedmineを起動する](https://qiita.com/kazuy/items/1a4c0f718c59479e2aa5)
   - HTTPS対応：[既存環境に手を加えずにサクッとHTTPS化する (NAT配下でもok)](https://amaya382.hatenablog.jp/entry/2017/04/02/002746)
     - 内部の通信はHTTPのままとする
     - HTTPS化が不要な場合は、https-portalの記述を削除する
-  - TODO: version固定にしたい
-  - TODO: パスワードをログに残したくない
-  - TODO: [File system permissions](http://www.redmine.org/projects/redmine/wiki/redmineinstall#Step-8-File-system-permissions)はいるのか？
 
 ### 起動
 #### Dockerコンテナを作成して起動
@@ -44,7 +41,7 @@ $ sudo docker container logs --follow redmine-main-tool
 
 #### Redmineの設定
 ```
-$ cat < setting.sql | sudo docker exec -i redmine-main-dbms mysql -D main-db -u main-db-user -pmain-db-password
+$ cat < config/redmine.sql | sudo docker exec -i redmine-main-dbms mysql -D main-db -u main-db-user -pmain-db-password
 $ sudo docker-compose -f redmine.yml restart main-tool
 ```
 
