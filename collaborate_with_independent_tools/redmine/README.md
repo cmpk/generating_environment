@@ -48,7 +48,7 @@ $ sudo docker-compose -f redmine.yml restart main-tool
 cmpk.test.redmine.comのドメインを取得していないため、作業マシンのhostsファイルで名前解決が必要。  
 
 ## 気づいたこと
-### YAMLファイルのRedmine本体側に`restart: always`が必要
+### YAMLファイルのRedmine用設定に`restart: always`が必要
 DBが起動するまではRedmine起動時にDB接続に失敗してしまう。 
 ```
 main-tool_1  | Mysql2::Error: Can't connect to MySQL server on 'main-dbms' (111 "Connection refused")
@@ -57,8 +57,8 @@ redmine_main-tool_1 exited with code 1
 ```
 再起動の設定がないと、一度DB接続に失敗したらRedmine起動は諦められてしまう。
 
-### YAMLファイルのDB側にRedmineが使用するDB名・ユーザ名・パスワードが必要
-Redmine側の設定だけに書けばよろしくやってくれる、というわけでは無かった。 
+### YAMLファイルのDB用設定にRedmineが使用するDB名・ユーザ名・パスワードが必要
+Redmine用設定の方にだけDB接続設定を書けばよしなにやってくれる、というわけでは無かった。 
 なお、Redmine側にDB名を指定しない場合は、DBMS側の設定に`redmine`の名前でDB名の指定が必要（未検証）。  
 
 ### マウント先のディレクトリがホスト側に無くても自動で作成してくれる
